@@ -1,30 +1,33 @@
-<template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<template lang="">
+  <div class="container">
+    <LocalCases />
+  </div>
 </template>
+<script>
+import axios from 'axios'
+import LocalCases from '@/components/LocalCases.vue'
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  components: {
+    LocalCases
+  },
+  data() {
+    return {
+      countries: null,
+      selectedCountry: null
     }
+  },
+  async mounted() {
+    axios.get(`/countries`).then(response => {
+      this.countries = response.data
+    })
+    console.log(this.countries)
   }
+}
+</script>
+<style lang="scss">
+.container {
+  margin: 0 auto;
+  width: 1140px;
 }
 </style>
